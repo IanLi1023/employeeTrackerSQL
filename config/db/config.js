@@ -9,7 +9,10 @@ const connection = mysql.createConnection({
     port: 3306
 });
 
-connection.connect()
+connection.connect((err) => {
+    if (err) throw err;
+    //console.log('Database connected.');
+});
 connection.query = util.promisify(connection.query) 
 
 module.exports = connection;
