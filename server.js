@@ -92,6 +92,7 @@ menu()
 
 const viewAllDepartments = async () => {
     const departments = await db.viewDept()
+    console.table(departments)
     menu()
 };
 

@@ -22,7 +22,7 @@ Download the application and run npm install.
 ## Usage
 Open a terminal window, type in "node server" and answer the provided questions. Once completed the application will generate tables with selected requests.
 
-![caption](utils/GoodREADMEGenerator.gif)
+![caption](util/EmployeeTracker.gif)
 
 ## License
 Employee Tracker is covered under the MIT license.
