@@ -19,7 +19,6 @@ const menu = () => {
                 type: 'list',
                 name: "choice",
                 message: 'Please select an option below?',
-                // name: 'license',
                 choices: [
                     "View all departments",
                     "View all roles",
@@ -31,7 +30,7 @@ const menu = () => {
                     "Add an employee",
                     "Update an employee role",
                     "Update manager",
-                    "Delete Department",
+                    "Delete department",
                     "Delete employee role",
                     "Delete employee",
                     "Total budget by department"
@@ -93,11 +92,8 @@ menu()
 
 const viewAllDepartments = async () => {
     const departments = await db.viewDept()
-    console.table(departments)
-    //db.connection.end()
     menu()
 };
-// viewAllDepartments()
 
 const addDepartment = async () => {
     const department = await inquirer.prompt([
@@ -109,19 +105,14 @@ const addDepartment = async () => {
     ])
     await db.addDept(department);
     console.log('Department has been added');
-    //db.connection.end()
     menu()
 }
-// addDepartment()
 
 const viewAllRoles = async () => {
     const roles = await db.viewRole()
     console.table(roles)
-    //db.connection.end()
     menu()
 };
-
-// viewAllRoles()
 
 const deleteDepartment = async () => {
     let departments = [];
@@ -129,7 +120,7 @@ const deleteDepartment = async () => {
     for (let i = 0; i < deptTable.length; i++) {
         departments.push({ name: deptTable[i].name, value: deptTable[i].id });
     }
-    const role = await inquirer.prompt([
+    const department = await inquirer.prompt([
         {
             type: 'list',
             name: 'id',
@@ -137,9 +128,8 @@ const deleteDepartment = async () => {
             choices: departments
         }
     ])
-    await db.deleteDept(role);
+    await db.deleteDept(department);
     console.log('Department has been deleted.');
-    //db.connection.end()
     menu()
 }
 
@@ -169,10 +159,8 @@ const addRole = async () => {
     ])
     await db.addRole(role);
     console.log('Role has been added');
-    //db.connection.end()
     menu()
 }
-// addDepartment()
 
 const updateEmployeeRole = async () => {
     let roles = [];
@@ -183,10 +171,8 @@ const updateEmployeeRole = async () => {
     let employeeList = [];
     let employeesTable = await db.viewEmployees();
     for (let i = 0; i < employeesTable.length; i++) {
-        //console.log(employeesTable[i])
         employeeList.push({ name: employeesTable[i].employee, value: employeesTable[i].id });
     }
-    //console.log(employeeList);
     const employee = await inquirer.prompt([
         {
             type: 'list',
@@ -202,22 +188,18 @@ const updateEmployeeRole = async () => {
         },
 
     ])
-    //console.log(employee)
     await db.updateEmployeeNewRole(employee);
     console.log('Employee role has been updated');
-    //db.connection.end()
     menu()
 }
 
 const deleteEmployeeRole = async () => {
     let roles = [];
-    console.log("Is it stuck?")
     let roleTable = await db.viewRole();
     console.table(roleTable);
     for (let i = 0; i < roleTable.length; i++) {
         roles.push({ name: roleTable[i].title, value: roleTable[i].id });
     }
-    console.log(roles);
     const role = await inquirer.prompt([
         {
             type: 'list',
@@ -228,7 +210,6 @@ const deleteEmployeeRole = async () => {
     ])
     await db.deleteRole(role);
     console.log('Role has been deleted.');
-    //db.connection.end()
     menu()
 }
 
@@ -241,10 +222,8 @@ const addEmployee = async () => {
     let employeeList = [];
     let employeesTable = await db.viewEmployees();
     for (let i = 0; i < employeesTable.length; i++) {
-        //console.log(employeesTable[i])
         employeeList.push({ name: employeesTable[i].employee, value: employeesTable[i].id });
     }
-    //console.log(employeeList);
     const employee = await inquirer.prompt([
         {
             type: 'input',
@@ -271,16 +250,13 @@ const addEmployee = async () => {
     ])
     await db.addEmployee(employee);
     console.log('Employee has been added');
-    //db.connection.end()
     menu()
 }
 const viewAllEmployees = async () => {
     const employees = await db.viewEmployees()
     console.table(employees)
-    //db.connection.end()
     menu()
 };
-// viewAllEmployees()
 
 const deleteAnEmployee = async () => {
     let employees = [];
@@ -298,7 +274,6 @@ const deleteAnEmployee = async () => {
     ])
     await db.deleteEmployee(employee);
     console.log('Employee has been removed.');
-    //db.connection.end()
     menu()
 }
 
@@ -307,10 +282,8 @@ const updateManager = async () => {
     let employeeList = [];
     let employeesTable = await db.viewEmployees();
     for (let i = 0; i < employeesTable.length; i++) {
-        //console.log(employeesTable[i])
         employeeList.push({ name: employeesTable[i].employee, value: employeesTable[i].id });
     }
-    //console.log(employeeList);
     const employee = await inquirer.prompt([
         {
             type: 'list',
@@ -326,10 +299,8 @@ const updateManager = async () => {
         },
 
     ])
-    //console.log(employee)
     await db.updateManager(employee);
     console.log('Employee role has been updated');
-    //db.connection.end()
     menu()
 }
 
@@ -337,10 +308,8 @@ const viewByManager = async () => {
     let employeeList = [];
     let employeesTable = await db.viewEmployees();
     for (let i = 0; i < employeesTable.length; i++) {
-        //console.log(employeesTable[i])
         employeeList.push({ name: employeesTable[i].employee, value: employeesTable[i].id });
     }
-    //console.log(employeeList);
     const employee = await inquirer.prompt([
         {
             type: 'list',
@@ -350,14 +319,11 @@ const viewByManager = async () => {
         },
 
     ])
-    //console.log(employee)
     let data = await db.viewByManager(employee);
     if (data.length == 0) {
         console.log ('This manager has no emploees!')
     } else    
     console.table(data);
-
-    //db.connection.end()
     menu()
 }
 
@@ -365,10 +331,8 @@ const viewByDepartment = async () => {
     let departmentList = [];
     let departmentTable = await db.viewDept();
     for (let i = 0; i < departmentTable.length; i++) {
-        //console.log(employeesTable[i])
         departmentList.push({ name: departmentTable[i].name, value: departmentTable[i].id });
     }
-    //console.log(employeeList);
     const department = await inquirer.prompt([
         {
             type: 'list',
@@ -378,14 +342,11 @@ const viewByDepartment = async () => {
         },
 
     ])
-    //console.log(employee)
     let data = await db.viewByDepartment(department);
     if (data.length == 0) {
         console.log ('This department has no employees!')
     } else    
     console.table(data);
-
-    //db.connection.end()
     menu()
 }
 
@@ -393,10 +354,8 @@ const budget = async () => {
     let departmentList = [];
     let departmentTable = await db.viewDept();
     for (let i = 0; i < departmentTable.length; i++) {
-        //console.log(employeesTable[i])
         departmentList.push({ name: departmentTable[i].name, value: departmentTable[i].id });
     }
-    //console.log(employeeList);
     const department = await inquirer.prompt([
         {
             type: 'list',
@@ -404,16 +363,11 @@ const budget = async () => {
             message: 'Select a department?',
             choices: departmentList
         },
-
     ])
-    //console.log(employee)
     let data = await db.budget(department);
     if (data.length == 0) {
         console.log ('This department has no employees, therefore no budget!')
     } else    
     console.table(data);
-
-
-    //db.connection.end()
     menu()
 }

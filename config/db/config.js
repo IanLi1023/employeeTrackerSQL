@@ -11,7 +11,6 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if (err) throw err;
-    //console.log('Database connected.');
 });
 connection.query = util.promisify(connection.query) 
 
